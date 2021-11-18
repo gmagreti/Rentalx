@@ -51,11 +51,15 @@ class CarsRepository implements ICarsRepository {
       .where('available = :available', { available: true });
 
     if (brand) {
-      carsQuery.andWhere('brand = :brand', { brand });
+      carsQuery.andWhere('LOWER(brand) like LOWER(:brand)', {
+        brand: `%${brand}%`,
+      });
     }
 
     if (name) {
-      carsQuery.andWhere('name = :name', { name });
+      carsQuery.andWhere('LOWER(name) like LOWER(:name)', {
+        name: `%${name}%`,
+      });
     }
 
     if (category_id) {
